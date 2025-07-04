@@ -22,7 +22,6 @@ development server:
 ```bash
 ./setup_and_run.sh
 ```
-
 ## Running the server
 
 Set the following environment variables before starting the server:

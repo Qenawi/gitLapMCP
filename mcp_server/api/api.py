@@ -128,8 +128,6 @@ def get_merge_request_ci_status(
             'GET',
             f'/projects/{project_id}/pipelines/{pipeline_id}',
         )
-        return pipeline.get('status')
-    return None
 
 
 def _write_changes_to_temp(changes, tempdir):
