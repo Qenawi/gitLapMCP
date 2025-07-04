@@ -99,20 +99,35 @@ def approve_merge_request(
 
 
 @jsonrpc_method('getMergeRequestApprovals')
-def get_merge_request_approvals(request, project_id: str, merge_request_iid: int):
+def get_merge_request_approvals(
+    request,
+    project_id: str,
+    merge_request_iid: int,
+):
     """Return approvals information for a merge request."""
-    return gitlab_request('GET', f'/projects/{project_id}/merge_requests/{merge_request_iid}/approvals')
+    endpoint = (
+        f'/projects/{project_id}/merge_requests/{merge_request_iid}/approvals'
+    )
+    return gitlab_request('GET', endpoint)
 
 
 @jsonrpc_method('getMergeRequestCiStatus')
-def get_merge_request_ci_status(request, project_id: str, merge_request_iid: int):
+def get_merge_request_ci_status(
+    request,
+    project_id: str,
+    merge_request_iid: int,
+):
     """Return the status of the latest pipeline for a merge request."""
-    pipelines = gitlab_request('GET', f'/projects/{project_id}/merge_requests/{merge_request_iid}/pipelines')
+    pipelines = gitlab_request(
+        'GET',
+        f'/projects/{project_id}/merge_requests/{merge_request_iid}/pipelines',
+    )
     if pipelines:
         pipeline_id = pipelines[0].get('id')
-        pipeline = gitlab_request('GET', f'/projects/{project_id}/pipelines/{pipeline_id}')
-        return pipeline.get('status')
-    return None
+        pipeline = gitlab_request(
+            'GET',
+            f'/projects/{project_id}/pipelines/{pipeline_id}',
+        )
 
 
 def _write_changes_to_temp(changes, tempdir):

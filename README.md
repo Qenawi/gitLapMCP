@@ -15,6 +15,13 @@ Install Python dependencies:
 pip install -r requirements.txt
 ```
 
+Alternatively, you can use the provided helper script which creates a
+virtual environment, installs the dependencies and launches the
+development server:
+
+```bash
+./setup_and_run.sh
+```
 ## Running the server
 
 Set the following environment variables before starting the server:
