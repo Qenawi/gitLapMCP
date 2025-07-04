@@ -58,6 +58,23 @@ def approve_merge_request(request, project_id: str, merge_request_iid: int):
     return gitlab_request('POST', f'/projects/{project_id}/merge_requests/{merge_request_iid}/approve')
 
 
+@jsonrpc_method('getMergeRequestApprovals')
+def get_merge_request_approvals(request, project_id: str, merge_request_iid: int):
+    """Return approvals information for a merge request."""
+    return gitlab_request('GET', f'/projects/{project_id}/merge_requests/{merge_request_iid}/approvals')
+
+
+@jsonrpc_method('getMergeRequestCiStatus')
+def get_merge_request_ci_status(request, project_id: str, merge_request_iid: int):
+    """Return the status of the latest pipeline for a merge request."""
+    pipelines = gitlab_request('GET', f'/projects/{project_id}/merge_requests/{merge_request_iid}/pipelines')
+    if pipelines:
+        pipeline_id = pipelines[0].get('id')
+        pipeline = gitlab_request('GET', f'/projects/{project_id}/pipelines/{pipeline_id}')
+        return pipeline.get('status')
+    return None
+
+
 def _write_changes_to_temp(changes, tempdir):
     for change in changes.get('changes', []):
         path = Path(tempdir) / change['new_path']
