@@ -27,35 +27,75 @@ def gitlab_request(method, endpoint, **kwargs):
 
 @jsonrpc_method('listMergeRequestsOnBranch')
 def list_merge_requests_on_branch(request, project_id: str, branch: str):
-    params = {'source_branch': branch, 'state': 'opened'}
-    return gitlab_request('GET', f'/projects/{project_id}/merge_requests', params=params)
+    params = {
+        'source_branch': branch,
+        'state': 'opened',
+    }
+    return gitlab_request(
+        'GET',
+        f'/projects/{project_id}/merge_requests',
+        params=params,
+    )
 
 
 @jsonrpc_method('getMergeRequestChanges')
-def get_merge_request_changes(request, project_id: str, merge_request_iid: int):
-    return gitlab_request('GET', f'/projects/{project_id}/merge_requests/{merge_request_iid}/changes')
+def get_merge_request_changes(
+    request,
+    project_id: str,
+    merge_request_iid: int,
+):
+    endpoint = (
+        f'/projects/{project_id}/merge_requests/'
+        f'{merge_request_iid}/changes'
+    )
+    return gitlab_request('GET', endpoint)
 
 
 @jsonrpc_method('addMergeRequestComment')
-def add_merge_request_comment(request, project_id: str, merge_request_iid: int, body: str):
+def add_merge_request_comment(
+    request,
+    project_id: str,
+    merge_request_iid: int,
+    body: str,
+):
     data = {'body': body}
-    return gitlab_request('POST', f'/projects/{project_id}/merge_requests/{merge_request_iid}/notes', data=data)
+    endpoint = (
+        f'/projects/{project_id}/merge_requests/'
+        f'{merge_request_iid}/notes'
+    )
+    return gitlab_request('POST', endpoint, data=data)
 
 
 @jsonrpc_method('createMergeRequest')
-def create_merge_request(request, project_id: str, source_branch: str, target_branch: str, title: str, description: str = ''):
+def create_merge_request(
+    request,
+    project_id: str,
+    source_branch: str,
+    target_branch: str,
+    title: str,
+    description: str = '',
+):
     data = {
         'source_branch': source_branch,
         'target_branch': target_branch,
         'title': title,
         'description': description,
     }
-    return gitlab_request('POST', f'/projects/{project_id}/merge_requests', data=data)
+    endpoint = f'/projects/{project_id}/merge_requests'
+    return gitlab_request('POST', endpoint, data=data)
 
 
 @jsonrpc_method('approveMergeRequest')
-def approve_merge_request(request, project_id: str, merge_request_iid: int):
-    return gitlab_request('POST', f'/projects/{project_id}/merge_requests/{merge_request_iid}/approve')
+def approve_merge_request(
+    request,
+    project_id: str,
+    merge_request_iid: int,
+):
+    endpoint = (
+        f'/projects/{project_id}/merge_requests/'
+        f'{merge_request_iid}/approve'
+    )
+    return gitlab_request('POST', endpoint)
 
 
 def _write_changes_to_temp(changes, tempdir):
@@ -91,7 +131,11 @@ def _run_regex(tempdir, pattern, message):
             with open(path) as f:
                 for idx, line in enumerate(f, start=1):
                     if regex.search(line):
-                        results.append({'path': str(path.relative_to(tempdir)), 'line': idx, 'message': message})
+                        results.append({
+                            'path': str(path.relative_to(tempdir)),
+                            'line': idx,
+                            'message': message,
+                        })
     return results
 
 
@@ -108,9 +152,21 @@ def review_merge_request(request, project_id: str, merge_request_iid: int):
                 flake8_output = _run_flake8(tmp)
                 for file_path, messages in flake8_output.items():
                     for m in messages:
-                        comments.append({'file_path': file_path, 'line': m.get('line'), 'body': m.get('text')})
+                        comments.append({
+                            'file_path': file_path,
+                            'line': m.get('line'),
+                            'body': m.get('text'),
+                        })
             elif rule.get('type') == 'regex':
-                regex_comments = _run_regex(tmp, rule.get('pattern'), rule.get('message', ''))
+                regex_comments = _run_regex(
+                    tmp,
+                    rule.get('pattern'),
+                    rule.get('message', ''),
+                )
                 for c in regex_comments:
-                    comments.append({'file_path': c['path'], 'line': c['line'], 'body': c['message']})
+                    comments.append({
+                        'file_path': c['path'],
+                        'line': c['line'],
+                        'body': c['message'],
+                    })
     return comments
