@@ -1,0 +1,5 @@
+rules:
+  - linter: flake8
+  - type: regex
+    pattern: 'def [A-Z]'
+    message: '⚠️ function names must be snake_case'
