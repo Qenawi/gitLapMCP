@@ -1,0 +1,4 @@
+Django>=5.2,<6
+django-json-rpc>=0.7
+requests>=2.32
+PyYAML>=6.0
