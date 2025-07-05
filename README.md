@@ -6,7 +6,7 @@ used to list, review and manage merge requests.
 
 ## Requirements
 
-- Python 3.11
+- Python 3.10
 - GitLab personal access token
 
 Install Python dependencies:
