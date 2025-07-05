@@ -26,7 +26,7 @@ def gitlab_request(method, endpoint, **kwargs):
 
 
 @jsonrpc_method('listMergeRequestsOnBranch')
-def list_merge_requests_on_branch(request, project_id: str, branch: str):
+def list_merge_requests_on_branch(request, project_id, branch):
     params = {
         'source_branch': branch,
         'state': 'opened',
@@ -41,8 +41,8 @@ def list_merge_requests_on_branch(request, project_id: str, branch: str):
 @jsonrpc_method('getMergeRequestChanges')
 def get_merge_request_changes(
     request,
-    project_id: str,
-    merge_request_iid: int,
+    project_id,
+    merge_request_iid,
 ):
     endpoint = (
         f'/projects/{project_id}/merge_requests/'
@@ -54,9 +54,9 @@ def get_merge_request_changes(
 @jsonrpc_method('addMergeRequestComment')
 def add_merge_request_comment(
     request,
-    project_id: str,
-    merge_request_iid: int,
-    body: str,
+    project_id,
+    merge_request_iid,
+    body,
 ):
     data = {'body': body}
     endpoint = (
@@ -69,11 +69,11 @@ def add_merge_request_comment(
 @jsonrpc_method('createMergeRequest')
 def create_merge_request(
     request,
-    project_id: str,
-    source_branch: str,
-    target_branch: str,
-    title: str,
-    description: str = '',
+    project_id,
+    source_branch,
+    target_branch,
+    title,
+    description='',
 ):
     data = {
         'source_branch': source_branch,
@@ -88,8 +88,8 @@ def create_merge_request(
 @jsonrpc_method('approveMergeRequest')
 def approve_merge_request(
     request,
-    project_id: str,
-    merge_request_iid: int,
+    project_id,
+    merge_request_iid,
 ):
     endpoint = (
         f'/projects/{project_id}/merge_requests/'
@@ -101,8 +101,8 @@ def approve_merge_request(
 @jsonrpc_method('getMergeRequestApprovals')
 def get_merge_request_approvals(
     request,
-    project_id: str,
-    merge_request_iid: int,
+    project_id,
+    merge_request_iid,
 ):
     """Return approvals information for a merge request."""
     endpoint = (
@@ -114,8 +114,8 @@ def get_merge_request_approvals(
 @jsonrpc_method('getMergeRequestCiStatus')
 def get_merge_request_ci_status(
     request,
-    project_id: str,
-    merge_request_iid: int,
+    project_id,
+    merge_request_iid,
 ):
     """Return the status of the latest pipeline for a merge request."""
     pipelines = gitlab_request(
@@ -172,7 +172,7 @@ def _run_regex(tempdir, pattern, message):
 
 
 @jsonrpc_method('reviewMergeRequest')
-def review_merge_request(request, project_id: str, merge_request_iid: int):
+def review_merge_request(request, project_id, merge_request_iid):
     changes = get_merge_request_changes(request, project_id, merge_request_iid)
     comments = []
     with tempfile.TemporaryDirectory() as tmp:
