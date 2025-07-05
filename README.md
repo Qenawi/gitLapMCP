@@ -49,6 +49,11 @@ python manage.py runserver 8000
 
 The JSON-RPC endpoint will be available at `http://localhost:8000/rpc/`.
 
+An OpenAPI description of the available RPC methods can be fetched from
+`http://localhost:8000/openapi.json` once the server is running. This file can
+be used by tools that expect an OpenAPI schema to discover the available
+functions automatically.
+
 ## Continuous Integration
 
 The project includes a GitHub Actions workflow that installs dependencies,
