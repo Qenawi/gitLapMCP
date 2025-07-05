@@ -98,6 +98,33 @@ def approve_merge_request(
     return gitlab_request('POST', endpoint)
 
 
+@jsonrpc_method('mergeMergeRequest')
+def merge_merge_request(
+    request,
+    project_id,
+    merge_request_iid,
+    merge_params=None,
+):
+    """Merge a merge request."""
+    endpoint = (
+        f'/projects/{project_id}/merge_requests/'
+        f'{merge_request_iid}/merge'
+    )
+    return gitlab_request('PUT', endpoint, data=merge_params or {})
+
+
+@jsonrpc_method('closeMergeRequest')
+def close_merge_request(
+    request,
+    project_id,
+    merge_request_iid,
+):
+    """Close a merge request without merging."""
+    data = {'state_event': 'close'}
+    endpoint = f'/projects/{project_id}/merge_requests/{merge_request_iid}'
+    return gitlab_request('PUT', endpoint, data=data)
+
+
 @jsonrpc_method('getMergeRequestApprovals')
 def get_merge_request_approvals(
     request,

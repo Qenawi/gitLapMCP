@@ -4,6 +4,19 @@ This repository contains a lightweight Django JSON-RPC server used to integrate
 with GitLab merge request workflows. It exposes several RPC methods that can be
 used to list, review and manage merge requests.
 
+The following JSON-RPC methods are available:
+
+- `listMergeRequestsOnBranch`
+- `getMergeRequestChanges`
+- `addMergeRequestComment`
+- `createMergeRequest`
+- `approveMergeRequest`
+- `mergeMergeRequest`
+- `closeMergeRequest`
+- `getMergeRequestApprovals`
+- `getMergeRequestCiStatus`
+- `reviewMergeRequest`
+
 ## Requirements
 
 - Python 3.10 (recommended via [pyenv](https://github.com/pyenv/pyenv))
@@ -53,6 +66,21 @@ An OpenAPI description of the available RPC methods can be fetched from
 `http://localhost:8000/openapi.json` once the server is running. This file can
 be used by tools that expect an OpenAPI schema to discover the available
 functions automatically.
+
+MCP-compatible clients can retrieve the plugin manifest from
+`http://localhost:8000/.well-known/ai-plugin.json`.
+
+### MCP stdio server
+
+The repository also includes a stdio-based MCP server which can be launched with:
+
+```bash
+python mcp_server/mcp_server.py
+```
+
+It reads and writes JSON-RPC messages from standard input/output and exposes the
+same merge‑request management tools described above. A sample configuration file
+for AI assistants is provided in `config.json`.
 
 ## Continuous Integration
 

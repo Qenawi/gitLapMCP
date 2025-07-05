@@ -3,3 +3,4 @@ django-json-rpc>=0.7
 requests>=2.32
 PyYAML>=6.0
 flake8
+mcp>=1.0.0

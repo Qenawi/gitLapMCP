@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "gitlab": {
+      "command": "python",
+      "args": ["mcp_server/mcp_server.py"],
+      "env": {
+        "GITLAB_TOKEN": "${env:GITLAB_TOKEN}",
+        "GITLAB_URL": "${env:GITLAB_URL}"
+      }
+    }
+  }
+}
