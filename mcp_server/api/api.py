@@ -124,7 +124,7 @@ def get_merge_request_ci_status(
     )
     if pipelines:
         pipeline_id = pipelines[0].get('id')
-        pipeline = gitlab_request(
+        gitlab_request(
             'GET',
             f'/projects/{project_id}/pipelines/{pipeline_id}',
         )

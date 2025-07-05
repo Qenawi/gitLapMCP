@@ -3,5 +3,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('rpc/', include('jsonrpc.urls')),
+    path('rpc/', include('mcp_server.jsonrpc_urls')),
 ]
