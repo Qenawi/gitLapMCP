@@ -6,8 +6,16 @@ used to list, review and manage merge requests.
 
 ## Requirements
 
-- Python 3.10
+- Python 3.10 (recommended via [pyenv](https://github.com/pyenv/pyenv))
 - GitLab personal access token
+
+If using `pyenv`, make sure to install and activate Python 3.10.17 before
+running any of the helper scripts:
+
+```bash
+pyenv install 3.10.17  # if not already installed
+pyenv local 3.10.17
+```
 
 Install Python dependencies:
 
@@ -22,6 +30,9 @@ development server:
 ```bash
 ./setup_and_run.sh
 ```
+The script relies on the Python version specified in `.python-version`. If you
+use `pyenv`, ensure that version 3.10.17 is installed so the script can
+create the virtual environment correctly.
 ## Running the server
 
 Set the following environment variables before starting the server:
