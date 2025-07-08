@@ -1,0 +1,61 @@
+# ────────── Python / Django basics ──────────
+# Byte-code & C extensions
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+
+# Virtual-envs (adjust if yours lives elsewhere)
+.venv/
+env/
+venv/
+
+# Django generated files
+*.log
+*.pot
+*.py,cover
+db.sqlite3
+media/
+staticfiles/
+*.sqlite3
+
+# Unit-test / coverage artifacts
+htmlcov/
+.coverage
+.tox/
+pytest_cache/
+coverage.xml
+*.cover
+
+# IDEs / Editors
+.vscode/
+.idea/
+*.iml
+*.sublime-*
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+# ────────── MCP-specific additions ──────────
+# JSON schemas cached by FastMCP (if you persist them)
+mcp_schema_cache.json
+
+# Session-ID debug logs
+mcp_session_*.json
+mcp_debug.log
+
+# Copilot / Cursor local config (safe to regenerate)
+.vscode/mcp.json
+*.mcp.local.json
+
+# Copilot Extension build artifacts (if you scaffolded a skillset)
+dist/
+*.vsix
+node_modules/
+npm-debug.log*
+
+# Container / deployment extras
+*.env
+docker-compose.override.yml
+.local-dev/
