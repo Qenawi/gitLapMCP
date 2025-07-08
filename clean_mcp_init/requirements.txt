@@ -5,3 +5,4 @@ mcp==1.9.4              # latest 1.9.x release; satisfies both libs
 uvicorn==0.35.0         # ASGI runner if you serve Django directly
 daphne==4.2.1
 requests==2.31.0
+python-dotenv==1.1.0
