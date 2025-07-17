@@ -22,5 +22,6 @@ class MCPServerTests(SimpleTestCase):
             'gitlab_get_merge_request_comments',
             'gitlab_add_comment',
             'gitlab_pipeline_status',
+            'jira_fetch',
         }
         self.assertTrue(expected.issubset(names))
